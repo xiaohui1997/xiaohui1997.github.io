@@ -83,7 +83,7 @@
         margin: 30px 0;
     }
 
-    .tips, .example {
+    .tips, .example, .diys {
         color: #7b7b7b;
         position: relative;
         align-self: flex-start;
@@ -103,12 +103,30 @@
         content: '合法输入示例：';
         color: #7b7b7b
     }
+    .diys > p:first-child::before {
+        position: absolute;
+        left: -7.5em;
+        content: '通用链接：';
+        color: #7b7b7b
+    }
+    .diys {
+        margin-bottom: 4rem;
+    }
 </style>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <script>
+        window.onload = function() {
+        var element = document.getElementsByName("q")[0];
+        element.addEventListener('input', function(e) {
+            console.log('Input changed to: ', e.target.value);
+            var element = document.getElementById("diy");
+            element.innerHTML = e.target.value;
+        });
+        }
+
         function toSubmit(e) {
             e.preventDefault()
             window.open(location.href.substr(0, location.href.lastIndexOf('/') + 1) + document.getElementsByName('q')[0].value);
@@ -130,7 +148,12 @@
         <div class="bar"></div>
     </label>
     <input class="block btn" type="submit" value="下载">
-    <div class="tips"><p>GitHub文件链接带不带协议头都可以，支持release、archive以及文件，右键复制出来的链接都是符合标准的，更多用法、clone加速请参考<a href="https://hunsh.net/archives/23/">这篇文章</a>。</p>
+
+    <div class="diys">
+        <p>https://github.fanye.icu/<span id="diy"></span></p>
+    </div>
+
+    <div class="tips"><p>GitHub文件链接带不带协议头都可以，支持release、archive以及文件，右键复制出来的链接都是符合标准的。</p>
         <p>release、archive使用cf加速，文件会跳转至JsDelivr</p>
         <p>注意，不支持项目文件夹</p></div>
     <div class="example">
@@ -140,8 +163,7 @@
         <p>分支文件：https://github.com/hunshcn/project/blob/master/filename</p>
     </div>
 </form>
-<p style="position: sticky;top: calc(100% - 2.5em);">项目基于fanye Cloudflare Workers，开源于GitHub <a style="color: #3294ea"
-                                                                                         href="https://github.com/hunshcn/gh-proxy">hunshcn/gh-proxy</a>
+<p style="position: sticky;top: calc(100% - 2.5em);">项目基于Cloudflare Workers，开源于GitHub。
 </p>
 </body>
 </html>
